@@ -72,6 +72,7 @@ Course Materials / Prompts
 [Module 1]  [Module 2]             [Module 3]
 Slide Deck  Assignment Feedback    Study Guide & Interactive Quiz
 Architect   & Milestone Guide     (Web App + Quizlet TSV Export)
+```text
 
 1. **Ingest**: Upload course materials, lecture slide decks, assignment briefs, or text prompts.
 2. **Synthesize**: WorkBuddy AI extracts core concepts, structures milestones, and generates rubric-aligned outputs with zero hallucination.
