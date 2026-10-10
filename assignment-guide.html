@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIN62704 Assignment Guide & Draft Tracker</title>
+<style>
+  :root {
+    --bg: #f5f7fa;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1a202c;
+    --text-muted: #64748b;
+    --primary: #3b82f6;
+    --primary-light: #dbeafe;
+    --green: #22c55e;
+    --green-light: #dcfce7;
+    --amber: #f59e0b;
+    --amber-light: #fef3c7;
+    --red: #ef4444;
+    --red-light: #fee2e2;
+    --radius: 12px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-lg: 0 10px 30px rgba(0,0,0,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ---- Header ---- */
+  .header {
+    background: linear-gradient(135deg, #1e3a5f, #2563eb);
+    color: #fff;
+    padding: 28px 40px;
+    box-shadow: var(--shadow-lg);
+  }
+  .header h1 { font-size: 22px; font-weight: 700; }
+  .header .subtitle { font-size: 14px; opacity: 0.85; margin-top: 4px; }
+  .header .deadline {
+    display: inline-block;
+    margin-top: 10px;
+    background: rgba(255,255,255,0.15);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+  }
+
+  /* ---- Layout ---- */
+  .container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 24px 40px 60px;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 24px;
+  }
+
+  @media (max-width: 900px) {
+    .container { grid-template-columns: 1fr; padding: 16px; }
+  }
+
+  /* ---- Sidebar ---- */
+  .sidebar {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+  }
+
+  .progress-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+  }
+  .progress-card h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 12px; }
+
+  .progress-ring-wrap {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .progress-ring {
+    width: 70px;
+    height: 70px;
+    position: relative;
+    border-radius: 50%;
+    background: conic-gradient(var(--green) 0deg, #e2e8f0 0deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.6s ease;
+  }
+  .progress-ring::before {
+    content: '';
+    position: absolute;
+    width: 54px;
+    height: 54px;
+    background: var(--card);
+    border-radius: 50%;
+  }
+  .progress-ring span {
+    position: relative;
+    z-index: 1;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .progress-info { font-size: 13px; color: var(--text-muted); }
+  .progress-info b { color: var(--text); font-size: 15px; }
+
+  /* ---- Task List ---- */
+  .task-list { list-style: none; }
+  .task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-bottom: 2px;
+  }
+  .task-item:hover { background: var(--bg); }
+  .task-item.active { background: var(--primary-light); }
+  .task-item.completed .task-title { text-decoration: line-through; color: var(--text-muted); }
+
+  .task-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    transition: all 0.2s;
+  }
+  .task-item.active .task-dot { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+  .task-item.completed .task-dot { border-color: var(--green); background: var(--green); color: #fff; }
+  .task-item.in-progress .task-dot { border-color: var(--amber); background: var(--amber-light); color: var(--amber); }
+
+  .task-info { flex: 1; min-width: 0; }
+  .task-title { font-size: 13px; font-weight: 600; }
+  .task-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ---- Main Panel ---- */
+  .main-panel { min-width: 0; }
+
+  .section-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .section-header {
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 18px; font-weight: 700; }
+  .section-header .word-count {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--bg);
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+
+  .section-body { padding: 24px 28px; }
+
+  /* ---- Guidance Box ---- */
+  .guidance-box {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-left: 4px solid var(--primary);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+  }
+  .guidance-box h4 { font-size: 13px; color: var(--primary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .guidance-box ul { margin-left: 18px; }
+  .guidance-box li { font-size: 13px; margin-bottom: 6px; color: #334155; }
+
+  .rubric-box {
+    background: #fefce8;
+    border: 1px solid #fde68a;
+    border-left: 4px solid var(--amber);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #78350f;
+  }
+  .rubric-box b { color: #92400e; }
+
+  /* ---- Draft Editor ---- */
+  .draft-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .draft-toolbar label { font-size: 13px; font-weight: 600; color: var(--text-muted); }
+  .wc-display {
+    margin-left: auto;
+    font-size: 13px;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+  .wc-ok { background: var(--green-light); color: #166534; }
+  .wc-warn { background: var(--amber-light); color: #92400e; }
+  .wc-over { background: var(--red-light); color: #991b1b; }
+
+  .draft-area {
+    width: 100%;
+    min-height: 320px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 14px;
+    line-height: 1.7;
+    resize: vertical;
+    transition: border-color 0.2s;
+    color: var(--text);
+  }
+  .draft-area:focus { outline: none; border-color: var(--primary); }
+  .draft-area::placeholder { color: #94a3b8; font-style: italic; }
+
+  /* ---- Buttons ---- */
+  .btn-row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+  .btn {
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { background: #2563eb; }
+  .btn-success { background: var(--green); color: #fff; }
+  .btn-success:hover { background: #16a34a; }
+  .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+  .btn-sm { padding: 6px 14px; font-size: 12px; }
+
+  /* ---- Feedback Box ---- */
+  .feedback-box {
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    display: none;
+  }
+  .feedback-box.show { display: block; }
+  .feedback-header {
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .feedback-body { padding: 16px 18px; font-size: 13px; line-height: 1.7; }
+  .feedback-good { background: var(--green-light); }
+  .feedback-good .feedback-header { background: var(--green); color: #fff; }
+  .feedback-improve { background: var(--amber-light); }
+  .feedback-improve .feedback-header { background: var(--amber); color: #fff; }
+  .feedback-missing { background: var(--red-light); }
+  .feedback-missing .feedback-header { background: var(--red); color: #fff; }
+
+  .feedback-section { margin-bottom: 12px; }
+  .feedback-section h5 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .feedback-section ul { margin-left: 16px; }
+  .feedback-section li { margin-bottom: 3px; }
+
+  /* ---- Checklist ---- */
+  .checklist {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+  }
+  .checklist h4 { font-size: 13px; color: #166534; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .check-item { display: flex; align-items: center; gap: 8px; font-size: 13px; margin-bottom: 6px; color: #334155; cursor: pointer; }
+  .check-item input { width: 16px; height: 16px; accent-color: var(--green); }
+
+  /* ---- Status badges ---- */
+  .status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .status-pending { background: #e2e8f0; color: #64748b; }
+  .status-progress { background: var(--amber-light); color: var(--amber); }
+  .status-done { background: var(--green-light); color: #166534; }
+
+  /* ---- Hint ---- */
+  .hint-bar {
+    background: #f8fafc;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state .big-icon { font-size: 42px; margin-bottom: 12px; }
+
+  .tab-bar {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 0;
+    border-bottom: 2px solid var(--border);
+  }
+  .tab {
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.15s;
+    border-radius: 6px 6px 0 0;
+  }
+  .tab:hover { background: var(--bg); }
+  .tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .save-indicator {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-left: auto;
+  }
+  .save-indicator.saved { color: var(--green); }
+
+  details summary {
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    padding: 8px 0;
+  }
+  details { margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>FIN62704 / FIN60104 — Introduction to Finance</h1>
+  <div class="subtitle">Individual Assignment (35%) — Cash Budget for an Active Aging Individual</div>
+  <div class="deadline">Due: Wednesday 2nd December 2026, 2pm</div>
+</div>
+
+<div class="container">
+  <!-- ===== SIDEBAR ===== -->
+  <div class="sidebar">
+    <div class="progress-card">
+      <h3>Overall Progress</h3>
+      <div class="progress-ring-wrap">
+        <div class="progress-ring" id="progressRing">
+          <span id="progressText">0%</span>
+        </div>
+        <div class="progress-info">
+          <b id="completedCount">0</b> of 9 sections<br>
+          <span id="wordTotal">0</span> words written
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-card">
+      <h3>Assignment Sections</h3>
+      <ul class="task-list" id="taskList"></ul>
+    </div>
+  </div>
+
+  <!-- ===== MAIN PANEL ===== -->
+  <div class="main-panel">
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-badge" id="sectionBadge">1</div>
+        <h2 id="sectionTitle">Respondent Financial Profile</h2>
+        <span class="word-count" id="sectionWordCount">0 words</span>
+      </div>
+
+      <div class="section-body" id="sectionBody">
+        <!-- Guidance, checklist, and editor get injected here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ====== DATA ======
+const sections = [
+  {
+    id: 1,
+    title: "Respondent Financial Profile",
+    targetWords: "300-400",
+    guidance: [
+      "Personal & demographic background — name (pseudonym), age, gender, ethnicity, marital status, dependents, employment status, planned retirement age",
+      "Current income streams — monthly salary/business income, rental income, children's allowances, investment income (dividends, FD interest), EPF balance",
+      "Personal commitments & spending patterns — housing, loan repayments, household expenses, healthcare/insurance, support for dependents, discretionary spending",
+      "Financial goals — short-term (1-2 yrs), medium-term (3-5 yrs), long-term (5+ yrs)",
+      "Existing savings & investments — savings account, fixed deposits, shares, bonds, EPF, property",
+      "Perceived financial risks — healthcare costs, inflation, outliving funds, dependents' dependence, investment risk tolerance"
+    ],
+    checklist: [
+      "Demographics covered (age, marital status, dependents, employment)",
+      "All income sources identified with RM amounts",
+      "Spending patterns detailed with RM amounts",
+      "Financial goals categorized (short/medium/long-term)",
+      "All savings & investment holdings listed with values",
+      "Financial risks/concerns explicitly stated"
+    ],
+    rubric: "This section provides the data foundation for all subsequent analysis. Be specific with RM figures — vague estimates weaken your cash budgets later.",
+    placeholder: "Write your respondent financial profile here...\n\nExample structure:\nMr. Tan, aged 57, is a self-employed bakery owner in Kuala Lumpur. He is married with two adult children. His monthly income streams include..."
+  },
+  {
+    id: 2,
+    title: "Pre-Retirement Cash Budget (3 Years)",
+    targetWords: "Table + 150",
+    guidance: [
+      "Create annual tables for 3 years BEFORE retirement (e.g., Year -3, Year -2, Year -1)",
+      "Monthly Cash Inflows: salary/business income, rental income, children's allowances, investment income (FD interest, dividends), other income",
+      "Monthly Cash Outflows: housing (rent/mortgage), utilities, food & groceries, healthcare/insurance, transport, loan repayments, discretionary/leisure",
+      "Calculate: Total Inflows, Total Outflows, Net Cash Flow, Cumulative Cash Balance for each year",
+      "Add a brief narrative explaining any year-over-year changes (e.g., loan payoff in Year -2 increases net cash flow)",
+      "Use realistic inflation adjustments (e.g., 3% annual increase in expenses)",
+      "Format as clearly labeled tables — use RM currency"
+    ],
+    checklist: [
+      "3 years of pre-retirement annual budgets created",
+      "All income sources included with RM figures",
+      "All expense categories included with RM figures",
+      "Net cash flow calculated for each year",
+      "Cumulative balance calculated for each year",
+      "Year-over-year changes explained in narrative",
+      "Inflation adjustments applied realistically"
+    ],
+    rubric: "Tables must be clearly formatted. The rubric rewards 'critically insightful problem statement' — your narrative should demonstrate analytical thinking, not just numbers.",
+    placeholder: "Insert your pre-retirement cash budget tables here...\n\nFormat:\nPRE-RETIREMENT CASH BUDGET\n                    Year -3    Year -2    Year -1\nINFLOWS:\n  Salary           RM___      RM___      RM___\n  ..."
+  },
+  {
+    id: 3,
+    title: "Post-Retirement Cash Budget (3 Years)",
+    targetWords: "Table + 150",
+    guidance: [
+      "Create annual tables for first 3 years of retirement (Year R1, R2, R3)",
+      "Adjust income: EPF withdrawals, pension (if any), reduced/ceased business income, rental income continues, investment income, children's allowances",
+      "Adjust expenses: potentially higher healthcare, lower transport, lower discretionary, continued housing",
+      "Calculate: Total Inflows, Total Outflows, Net Cash Flow, Cumulative Cash Balance",
+      "Highlight the key transition point — the gap between pre-retirement and post-retirement income",
+      "Note if there's a shortfall (outflows > inflows) or surplus (inflows > outflows)",
+      "Apply inflation to expenses (healthcare typically rises faster, ~5-6%)"
+    ],
+    checklist: [
+      "3 years of post-retirement annual budgets created",
+      "EPF withdrawal strategy specified (lump sum vs annuity)",
+      "Pension/retirement income included if applicable",
+      "Healthcare costs adjusted upward for retirement",
+      "Net cash flow shows surplus or shortfall clearly",
+      "Cumulative balance tracks depletion or growth",
+      "Comparison to pre-retirement budget highlighted"
+    ],
+    rubric: "This is the CRITICAL table — it determines whether your recommendations address a shortfall or surplus. Be precise and realistic.",
+    placeholder: "Insert your post-retirement cash budget tables here...\n\nPOST-RETIREMENT CASH BUDGET\n                    Year R1     Year R2     Year R3\nINFLOWS:\n  EPF Withdrawal   RM___       RM___       RM___\n  ..."
+  },
+  {
+    id: 4,
+    title: "Financial Transition Analysis",
+    targetWords: "300-400",
+    guidance: [
+      "Compare pre-retirement vs post-retirement financial position across the 6-year horizon",
+      "Changes in overall financial sustainability — is the respondent better or worse off?",
+      "Key pressure points: rising healthcare costs, inflation/cost of living, reduced income gap",
+      "Quantify the changes: e.g., 'income drops by RM X/month while healthcare rises by RM Y/month'",
+      "Shifts in financial priorities — from debt repayment to healthcare, from wealth accumulation to preservation",
+      "Shifts in risk exposure — from income risk (job loss) to longevity risk (outliving savings)",
+      "Use specific numbers from your budgets to support every claim"
+    ],
+    checklist: [
+      "6-year horizon comparison clearly articulated",
+      "Financial sustainability change quantified",
+      "At least 2-3 key pressure points identified with RM figures",
+      "Shifts in financial priorities discussed",
+      "Shifts in risk exposure discussed",
+      "All claims supported by budget numbers"
+    ],
+    rubric: "This section demonstrates critical thinking (MLO4, 20%). Don't just describe — ANALYZE. Show cause and effect.",
+    placeholder: "Write your financial transition analysis here...\n\nExample:\nAcross the six-year horizon, Mr. Tan's financial position undergoes a significant shift. His monthly income decreases from RM X to RM Y upon retirement, representing a Z% reduction..."
+  },
+  {
+    id: 5,
+    title: "Retirement Sustainability Assessment",
+    targetWords: "250-350",
+    guidance: [
+      "Assess adequacy: Are available resources (EPF, savings, investments, income) sufficient to meet projected lifestyle needs?",
+      "Identify gaps: Is there an income gap (inflows < outflows)? A liquidity gap (assets tied up in illiquid investments)? A timeline gap (funds run out before expected)?",
+      "Discuss surplus implications: If surplus exists, is it sustainable long-term? What about 10-15 years into retirement?",
+      "Discuss shortfall implications: How long before savings are depleted? What compromises would be needed?",
+      "Consider longevity risk — Malaysians aged 60 today have a life expectancy of ~75-80 years, so plan for 15-20 years of retirement",
+      "Reference specific numbers from your cash budgets"
+    ],
+    checklist: [
+      "Adeacy of resources explicitly assessed (sufficient/insufficient)",
+      "Specific gaps identified (income, liquidity, or timeline)",
+      "Surplus or shortfall implications discussed",
+      "Longevity risk considered",
+      "Depletion timeline calculated if shortfall exists",
+      "Budget numbers referenced"
+    ],
+    rubric: "This section bridges analysis and recommendations. Your assessment here determines what recommendations you propose next.",
+    placeholder: "Write your retirement sustainability assessment here...\n\nExample:\nBased on the projected post-retirement cash budgets, Mr. Tan's available resources appear [sufficient/insufficient] to sustain his current lifestyle..."
+  },
+  {
+    id: 6,
+    title: "Strategic Financial Recommendations",
+    targetWords: "300-400",
+    guidance: [
+      "IF SHORTFALL: Propose 2 strategies to address the gap (e.g., part-time income, reduce discretionary spending, reallocate to higher-yield investments, downsize property, reverse mortgage)",
+      "IF SURPLUS: Propose 2 strategies to best utilize extra funds (e.g., diversify into income-generating assets, top up medical insurance, build emergency fund for later years, invest in annuity)",
+      "Each recommendation must: (1) be realistic for this respondent, (2) reference specific budget numbers, (3) explain WHY it works, (4) acknowledge consequences/trade-offs",
+      "Align with respondent's risk tolerance and life stage — don't recommend aggressive stock investing for a risk-averse 60-year-old",
+      "The rubric rewards recognizing ALL consequences of your recommendations"
+    ],
+    checklist: [
+      "2 recommendations provided (for shortfall OR surplus)",
+      "Each recommendation references specific budget figures",
+      "Each recommendation explains WHY it is appropriate",
+      "Consequences/trade-offs of each recommendation discussed",
+      "Recommendations align with respondent's risk tolerance",
+      "Recommendations are realistic for the respondent's life stage"
+    ],
+    rubric: "CRITICAL SECTION (20% weight). Rubric rewards 'comprehensive recommendation(s) that recognize ALL consequences of the recommendation based on the pre and post-retirement cash budgets that articulate a reason(s) for choosing recommendation/solution(s)'.",
+    placeholder: "Write your strategic recommendations here...\n\nRecommendation 1: [Title]\nBased on the projected monthly shortfall of RM___ in the post-retirement cash budget, I recommend...\n\nRecommendation 2: [Title]\n..."
+  },
+  {
+    id: 7,
+    title: "Issue Identification & Solution",
+    targetWords: "200-300",
+    guidance: [
+      "Identify ONE specific problem/issue you encountered when constructing the cash budgets",
+      "Good examples: difficulty projecting healthcare inflation, uncertainty about EPF withdrawal rules, estimating one-off expenses, lack of data on investment returns",
+      "BAD examples: 'it was hard to get data' or 'the respondent didn't remember exact amounts' — too generic",
+      "Propose ONE specific solution to the issue you identified",
+      "Explain how the solution addresses the problem effectively",
+      "The rubric specifically rewards a 'critically insightful problem statement' — be analytical, not superficial"
+    ],
+    checklist: [
+      "One specific issue/problem identified",
+      "Problem is analytical, not superficial (not just 'hard to get data')",
+      "One concrete solution proposed",
+      "Solution directly addresses the identified problem",
+      "Explanation of how/why the solution works"
+    ],
+    rubric: "The rubric has a dedicated 20% weight for problem identification + solution. 'Critically insightful' (9-10) vs 'superficial' (0-4). Make it count.",
+    placeholder: "Write your issue & solution here...\n\nIssue:\nOne significant challenge encountered during the construction of the cash budgets was...\n\nSolution:\nTo address this issue, ..."
+  },
+  {
+    id: 8,
+    title: "Reflective Report (~500 words)",
+    targetWords: "500",
+    guidance: [
+      "This is a SEPARATE document from the main report",
+      "Explain how you demonstrated self-directed learning while working on Part A tasks",
+      "Be SPECIFIC — cite concrete examples of what you did independently",
+      "Examples of self-directed learning: researching EPF withdrawal rules, studying inflation trends, learning cash budget formulas, finding healthcare cost data, independently analyzing investment options",
+      "Include the respondent's feedback/thoughts on the proposed post-retirement cash budget — did they agree? Were they surprised? What changes did they suggest?",
+      "Reflect on what you learned about financial planning and the aging population",
+      "Must be ~500 words"
+    ],
+    checklist: [
+      "Self-directed learning demonstrated with specific examples",
+      "At least 2-3 concrete instances of independent learning cited",
+      "Respondent's feedback on proposed cash budget included",
+      "Personal reflection on the learning experience",
+      "Approximately 500 words"
+    ],
+    rubric: "Marked under TGC 4.1 (15% weight). 'Demonstrates autonomy and a continued commitment to learn independently, consistently, using a variety of self-directed learning activities' = Outstanding (9-10).",
+    placeholder: "Write your reflective report here (~500 words)...\n\nExample:\nThroughout this assignment, I demonstrated self-directed learning in several ways. Firstly, I independently researched..."
+  },
+  {
+    id: 9,
+    title: "Interview Link & Final Assembly",
+    targetWords: "N/A",
+    guidance: [
+      "Add a clear, accessible video or audio recording link of the interview session at the END of the individual report",
+      "Upload to Google Drive, YouTube (unlisted), or similar — ensure the link is accessible to markers",
+      "Prepare cover page: Full Name (block capitals), Student ID, Programme, Module Name, Tutor Name, Assignment Title, Due Date",
+      "Save file as: <FullName_StudentID>.pdf",
+      "Format check: Times New Roman 12pt, single spacing, justified, 1-inch margins, page numbers",
+      "Harvard referencing with page numbers throughout",
+      "Complete AI Declaration form (found in myTimeS)",
+      "If AI used: attach chat history + appendix listing prompts, outputs, how output was used, and page numbers",
+      "Submit to BOTH Digital Drop Box AND Turnitin/Safe Assign in myTimeS",
+      "Turnitin similarity must be below 25% (no single source > 5%)"
+    ],
+    checklist: [
+      "Interview recording link included and accessible",
+      "Cover page completed",
+      "File saved as <FullName_StudentID>.pdf",
+      "Formatting: TNR 12pt, single spacing, justified, 1-inch margins",
+      "Page numbers included",
+      "Harvard referencing with page numbers throughout",
+      "AI Declaration form completed",
+      "AI chat history attached (if AI used)",
+      "Submitted to Digital Drop Box + Turnitin",
+      "Turnitin similarity < 25%, no single source > 5%"
+    ],
+    rubric: "Failure to provide interview recording evidence 'may result in marks being deducted or the assignment being deemed incomplete.' Late submission (24hr grace) = 50% penalty. Beyond 24hrs = zero mark.",
+    placeholder: "Paste your interview recording link here and note any final assembly items..."
+  }
+];
+
+// ====== STATE ======
+let currentSection = 1;
+let drafts = {};
+let checkStates = {};
+let feedbackShown = {};
+
+// Load from localStorage
+try {
+  const saved = localStorage.getItem('fin62704_drafts');
+  if (saved) drafts = JSON.parse(saved);
+  const savedChecks = localStorage.getItem('fin62704_checks');
+  if (savedChecks) checkStates = JSON.parse(savedChecks);
+} catch(e) {}
+
+function saveDrafts() {
+  localStorage.setItem('fin62704_drafts', JSON.stringify(drafts));
+}
+function saveChecks() {
+  localStorage.setItem('fin62704_checks', JSON.stringify(checkStates));
+}
+
+function countWords(text) {
+  if (!text || !text.trim()) return 0;
+  return text.trim().split(/\s+/).length;
+}
+
+function getSectionStatus(id) {
+  const draft = drafts[id] || '';
+  const checks = checkStates[id] || [];
+  const checkedCount = checks.filter(c => c).length;
+  const totalChecks = sections[id-1].checklist.length;
+  const wc = countWords(draft);
+  if (wc > 20 && checkedCount >= totalChecks * 0.8) return 'completed';
+  if (wc > 0 || checkedCount > 0) return 'in-progress';
+  return 'pending';
+}
+
+// ====== RENDER SIDEBAR ======
+function renderTaskList() {
+  const list = document.getElementById('taskList');
+  list.innerHTML = '';
+  sections.forEach(s => {
+    const status = getSectionStatus(s.id);
+    const wc = countWords(drafts[s.id] || '');
+    const li = document.createElement('li');
+    li.className = `task-item ${status} ${s.id === currentSection ? 'active' : ''}`;
+    const dotContent = status === 'completed' ? '&#10003;' : s.id;
+    li.innerHTML = `
+      <div class="task-dot">${dotContent}</div>
+      <div class="task-info">
+        <div class="task-title">${s.title}</div>
+        <div class="task-meta">${wc} words · ${status === 'completed' ? 'Done' : status === 'in-progress' ? 'In Progress' : 'Pending'}</div>
+      </div>
+    `;
+    li.onclick = () => selectSection(s.id);
+    list.appendChild(li);
+  });
+}
+
+function updateProgress() {
+  let completed = 0;
+  let totalWords = 0;
+  sections.forEach(s => {
+    if (getSectionStatus(s.id) === 'completed') completed++;
+    totalWords += countWords(drafts[s.id] || '');
+  });
+  const pct = Math.round((completed / sections.length) * 100);
+  const ring = document.getElementById('progressRing');
+  ring.style.background = `conic-gradient(var(--green) ${pct * 3.6}deg, #e2e8f0 ${pct * 3.6}deg)`;
+  document.getElementById('progressText').textContent = pct + '%';
+  document.getElementById('completedCount').textContent = completed;
+  document.getElementById('wordTotal').textContent = totalWords;
+}
+
+// ====== RENDER SECTION ======
+function selectSection(id) {
+  currentSection = id;
+  const s = sections[id - 1];
+  document.getElementById('sectionBadge').textContent = id;
+  document.getElementById('sectionTitle').textContent = s.title;
+
+  renderTaskList();
+  updateProgress();
+
+  const draft = drafts[id] || '';
+  const wc = countWords(draft);
+  document.getElementById('sectionWordCount').textContent = wc + ' words';
+
+  const body = document.getElementById('sectionBody');
+  const checks = checkStates[id] || new Array(s.checklist.length).fill(false);
+
+  body.innerHTML = `
+    <!-- Guidance -->
+    <div class="guidance-box">
+      <h4>What to Write (Target: ${s.targetWords} words)</h4>
+      <ul>${s.guidance.map(g => `<li>${g}</li>`).join('')}</ul>
+    </div>
+
+    <!-- Rubric Note -->
+    <div class="rubric-box">
+      <b>Rubric Note:</b> ${s.rubric}
+    </div>
+
+    <!-- Checklist -->
+    <div class="checklist">
+      <h4>Pre-Submission Checklist</h4>
+      ${s.checklist.map((c, i) => `
+        <label class="check-item">
+          <input type="checkbox" ${checks[i] ? 'checked' : ''} onchange="toggleCheck(${id}, ${i}, this.checked)" />
+          <span>${c}</span>
+        </label>
+      `).join('')}
+    </div>
+
+    <!-- Draft Editor -->
+    <div class="tab-bar">
+      <div class="tab active" onclick="switchTab('write', this)">Write Draft</div>
+      <div class="tab" onclick="switchTab('feedback', this)">AI Feedback</div>
+      <div class="tab" onclick="switchTab('preview', this)">Preview</div>
+      <span class="save-indicator" id="saveIndicator"></span>
+    </div>
+
+    <div class="tab-content active" id="tab-write">
+      <div class="draft-toolbar">
+        <label>Your Draft:</label>
+        <span class="wc-display ${wc > 0 ? (wc < 100 ? 'wc-warn' : 'wc-ok') : 'wc-ok'}" id="wcDisplay">${wc} words</span>
+      </div>
+      <textarea class="draft-area" id="draftArea" placeholder="${s.placeholder.replace(/"/g, '&quot;')}"
+        oninput="onDraftChange(this.value)">${draft}</textarea>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="requestFeedback()">Get Feedback</button>
+        <button class="btn btn-outline" onclick="saveDraft()">Save Draft</button>
+        <button class="btn btn-outline btn-sm" onclick="clearDraft()">Clear</button>
+        ${id > 1 ? `<button class="btn btn-outline" onclick="selectSection(${id-1})">&#8592; Previous</button>` : ''}
+        ${id < 9 ? `<button class="btn btn-success" onclick="selectSection(${id+1})">Next &#8594;</button>` : ''}
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-feedback">
+      <div id="feedbackContainer">
+        ${feedbackShown[id] ? renderFeedback() : `
+          <div class="empty-state">
+            <div class="big-icon">&#9998;</div>
+            <p>Write your draft and click <b>"Get Feedback"</b> to receive detailed analysis.<br>Your draft will be checked against the requirements and rubric.</p>
+          </div>
+        `}
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-preview">
+      <div style="background:#f8fafc; border:1px solid var(--border); border-radius:8px; padding:24px; min-height:300px; font-family:'Georgia','Times New Roman',serif; font-size:14px; line-height:1.7; white-space:pre-wrap;">${draft || '(No draft written yet. Switch to Write Draft tab to begin.)'}</div>
+    </div>
+
+    <div class="hint-bar">
+      <b>Tip:</b> Write your draft in the text area above, then click <b>Get Feedback</b>. The system will check your draft against the assignment requirements and give you specific, actionable improvement suggestions. Save frequently — your drafts are stored in your browser automatically.
+    </div>
+  `;
+  renderTaskList();
+  updateProgress();
+}
+
+function switchTab(tab, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+function onDraftChange(value) {
+  drafts[currentSection] = value;
+  const wc = countWords(value);
+  document.getElementById('sectionWordCount').textContent = wc + ' words';
+  const wcEl = document.getElementById('wcDisplay');
+  wcEl.textContent = wc + ' words';
+  wcEl.className = 'wc-display ' + (wc > 0 ? (wc < 100 ? 'wc-warn' : 'wc-ok') : 'wc-ok');
+  // auto-save
+  saveDrafts();
+  const si = document.getElementById('saveIndicator');
+  si.textContent = 'Saved';
+  si.className = 'save-indicator saved';
+  renderTaskList();
+  updateProgress();
+}
+
+function saveDraft() {
+  saveDrafts();
+  const si = document.getElementById('saveIndicator');
+  si.textContent = 'Saved at ' + new Date().toLocaleTimeString();
+  si.className = 'save-indicator saved';
+}
+
+function clearDraft() {
+  if (confirm('Clear this draft? This cannot be undone.')) {
+    drafts[currentSection] = '';
+    saveDrafts();
+    selectSection(currentSection);
+  }
+}
+
+function toggleCheck(sectionId, checkIdx, checked) {
+  if (!checkStates[sectionId]) checkStates[sectionId] = new Array(sections[sectionId-1].checklist.length).fill(false);
+  checkStates[sectionId][checkIdx] = checked;
+  saveChecks();
+  renderTaskList();
+  updateProgress();
+}
+
+// ====== FEEDBACK ENGINE ======
+function requestFeedback() {
+  const draft = (drafts[currentSection] || '').trim();
+  if (draft.length < 20) {
+    alert('Please write at least a few sentences before requesting feedback.');
+    return;
+  }
+
+  const s = sections[currentSection - 1];
+  const wc = countWords(draft);
+
+  // --- Check 1: Word count ---
+  let wcStatus = 'good';
+  let wcNote = '';
+  const target = s.targetWords;
+  if (target.includes('500')) {
+    if (wc < 400) { wcStatus = 'warn'; wcNote = `Only ${wc} words. Target is ~500 words. Add more detail.`; }
+    else if (wc > 600) { wcStatus = 'over'; wcNote = `${wc} words. Consider trimming to ~500.`; }
+    else { wcNote = `${wc} words — good length.`; }
+  } else if (target.includes('300-400') || target.includes('250-350')) {
+    const min = parseInt(target);
+    if (wc < min - 100) { wcStatus = 'warn'; wcNote = `Only ${wc} words. Target is ${target}. Expand your analysis.`; }
+    else { wcNote = `${wc} words — within range.`; }
+  } else {
+    wcNote = `${wc} words written.`;
+  }
+
+  // --- Check 2: Required keywords/elements ---
+  const lowerDraft = draft.toLowerCase();
+  const checks = s.checklist;
+  const checkedStates = checkStates[currentSection] || new Array(checks.length).fill(false);
+
+  // Auto-detect some keywords
+  const keywordMap = {
+    1: ['income', 'spend', 'saving', 'invest', 'risk', 'goal', 'age', 'married'],
+    2: ['inflow', 'outflow', 'net cash', 'cumulative', 'year', 'rm'],
+    3: ['epf', 'pension', 'healthcare', 'inflow', 'outflow', 'rm'],
+    4: ['pressure', 'sustain', 'shift', 'risk', 'transition', 'income'],
+    5: ['adequacy', 'gap', 'surplus', 'shortfall', 'longevity', 'deplet'],
+    6: ['recommend', 'consequence', 'risk', 'budget', 'realistic'],
+    7: ['issue', 'problem', 'solution', 'challenge', 'address'],
+    8: ['self-directed', 'independent', 'learn', 'feedback', 'respondent'],
+    9: ['link', 'http', 'cover', 'harvard', 'turnitin']
+  };
+
+  const kws = keywordMap[currentSection] || [];
+  const foundKws = kws.filter(k => lowerDraft.includes(k));
+  const missingKws = kws.filter(k => !lowerDraft.includes(k));
+
+  // --- Check 3: Currency ---
+  const hasRM = lowerDraft.includes('rm') || lowerDraft.includes('myr') || lowerDraft.includes('ringgit');
+
+  // --- Check 4: Structure ---
+  const hasParagraphs = draft.split('\n').filter(l => l.trim().length > 0).length >= 2;
+
+  // --- Build feedback ---
+  let good = [];
+  let improve = [];
+  let missing = [];
+
+  // Word count feedback
+  if (wcStatus === 'good') good.push(wcNote);
+  else if (wcStatus === 'warn') improve.push(wcNote);
+  else if (wcStatus === 'over') improve.push(wcNote);
+
+  // Keyword coverage
+  if (foundKws.length >= kws.length * 0.7) {
+    good.push(`Covers key concepts well — detected: ${foundKws.join(', ')}.`);
+  } else if (foundKws.length >= kws.length * 0.4) {
+    improve.push(`Some key elements detected (${foundKws.join(', ')}), but you may be missing: ${missingKws.join(', ')}.`);
+  } else {
+    missing.push(`Key elements not yet detected. Make sure you address: ${missingKws.join(', ')}.`);
+  }
+
+  // Currency check
+  if (currentSection >= 1 && currentSection <= 7) {
+    if (hasRM) good.push('Uses RM currency — good for financial specificity.');
+    else improve.push('Use specific RM figures — vague numbers weaken your analysis and cash budgets.');
+  }
+
+  // Structure check
+  if (hasParagraphs) {
+    good.push('Good paragraph structure — multiple paragraphs/lines used.');
+  } else {
+    improve.push('Break your draft into multiple paragraphs for readability and structure.');
+  }
+
+  // Checklist feedback
+  const checkedCount = checkedStates.filter(c => c).length;
+  if (checkedCount === checks.length) {
+    good.push('All checklist items ticked — great self-verification.');
+  } else if (checkedCount > 0) {
+    improve.push(`Only ${checkedCount}/${checks.length} checklist items ticked. Review the remaining items.`);
+  } else {
+    improve.push('None of the pre-submission checklist items are ticked. Review the checklist above.');
+  }
+
+  // Section-specific feedback
+  switch(currentSection) {
+    case 1:
+      if (!lowerDraft.includes('child') && !lowerDraft.includes('dependent')) improve.push('Mention dependents (children/spouse) — this affects financial obligations.');
+      if (!lowerDraft.includes('epf')) improve.push('Include EPF balance if known — it\'s a key retirement resource in Malaysia.');
+      break;
+    case 2:
+    case 3:
+      if (!lowerDraft.includes('net cash')) missing.push('Missing "Net Cash Flow" calculation — essential for every cash budget year.');
+      if (!lowerDraft.includes('cumulative')) missing.push('Missing "Cumulative Cash Balance" — tracks running balance over time.');
+      break;
+    case 4:
+      if (!lowerDraft.includes('%')) improve.push('Use percentages to quantify changes (e.g., "income drops by 40%") — shows analytical depth.');
+      break;
+    case 5:
+      if (!lowerDraft.includes('year')) improve.push('Specify how many years the funds will last — a timeline strengthens your assessment.');
+      break;
+    case 6:
+      if (!lowerDraft.includes('consequence') && !lowerDraft.includes('trade-off') && !lowerDraft.includes('however')) {
+        missing.push('Missing discussion of consequences/trade-offs — the rubric specifically rewards recognizing ALL consequences of your recommendations.');
+      }
+      break;
+    case 7:
+      if (lowerDraft.includes('hard to get data') || lowerDraft.includes('difficult to get') || lowerDraft.includes('did not remember')) {
+        missing.push('The problem statement seems too generic. The rubric rewards "critically insightful" — be more specific and analytical about the budgeting challenge.');
+      }
+      break;
+    case 8:
+      if (!lowerDraft.includes('feedback')) missing.push('Must include the respondent\'s feedback/thoughts on the proposed post-retirement cash budget — this is explicitly required.');
+      break;
+  }
+
+  feedbackShown[currentSection] = { good, improve, missing, wc, target: s.targetWords, checks, checkedCount };
+  // switch to feedback tab
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab')[1].classList.add('active');
+  document.getElementById('tab-feedback').classList.add('active');
+
+  document.getElementById('feedbackContainer').innerHTML = renderFeedback();
+}
+
+function renderFeedback() {
+  const f = feedbackShown[currentSection];
+  if (!f) return '';
+  let html = '';
+
+  if (f.good.length > 0) {
+    html += `<div class="feedback-box feedback-good show">
+      <div class="feedback-header">&#10003; Strengths</div>
+      <div class="feedback-body"><ul>${f.good.map(g => `<li>${g}</li>`).join('')}</ul></div>
+    </div>`;
+  }
+
+  if (f.improve.length > 0) {
+    html += `<div class="feedback-box feedback-improve show">
+      <div class="feedback-header">&#9888; Areas to Improve</div>
+      <div class="feedback-body"><ul>${f.improve.map(g => `<li>${g}</li>`).join('')}</ul></div>
+    </div>`;
+  }
+
+  if (f.missing.length > 0) {
+    html += `<div class="feedback-box feedback-missing show">
+      <div class="feedback-header">&#10007; Missing / Critical Gaps</div>
+      <div class="feedback-body"><ul>${f.missing.map(g => `<li>${g}</li>`).join('')}</ul></div>
+    </div>`;
+  }
+
+  if (f.good.length === 0 && f.improve.length === 0 && f.missing.length === 0) {
+    html = '<div class="empty-state"><p>No specific feedback yet. Write more content and try again.</p></div>';
+  }
+
+  html += `<div class="hint-bar" style="margin-top:16px;">
+    <b>Next step:</b> Address the items above, then re-click <b>Get Feedback</b> to verify improvements. Once you're satisfied, tick the checklist items and move to the next section.
+  </div>`;
+
+  return html;
+}
+
+// ====== INIT ======
+selectSection(1);
+renderTaskList();
+updateProgress();
+
+// Auto-save reminder
+window.addEventListener('beforeunload', () => {
+  saveDrafts();
+  saveChecks();
+});
+</script>
+
+</body>
+</html>
