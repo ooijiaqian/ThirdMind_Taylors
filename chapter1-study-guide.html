@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 1: Intro to Multinational Financial Management - Study Guide</title>
+<style>
+:root {
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #16213e;
+  --bg-card: #0f3460;
+  --bg-card-hover: #1a3a6e;
+  --text-primary: #e8e8e8;
+  --text-secondary: #a0a0b8;
+  --accent: #e94560;
+  --accent-light: #ff6b8a;
+  --success: #4ecca3;
+  --warning: #f0a500;
+  --error: #e94560;
+  --border: #2a2a4a;
+  --radius: 12px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ===== NAV BAR ===== */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+  padding: 12px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: var(--shadow);
+}
+.navbar-brand {
+  font-size: 16px; font-weight: 700; color: var(--accent-light);
+  display: flex; align-items: center; gap: 8px;
+}
+.navbar-brand span { font-size: 22px; }
+.navbar-tabs { display: flex; gap: 4px; }
+.nav-tab {
+  padding: 8px 18px; border: none; background: transparent;
+  color: var(--text-secondary); font-size: 14px; font-weight: 600;
+  cursor: pointer; border-radius: 8px; transition: all 0.25s;
+}
+.nav-tab:hover { background: var(--bg-card); color: var(--text-primary); }
+.nav-tab.active { background: var(--accent); color: #fff; }
+.progress-mini {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--text-secondary);
+}
+.progress-mini-bar {
+  width: 120px; height: 8px; background: var(--bg-card);
+  border-radius: 4px; overflow: hidden;
+}
+.progress-mini-fill {
+  height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  border-radius: 4px; transition: width 0.5s;
+}
+
+/* ===== MAIN LAYOUT ===== */
+.main-content { padding: 80px 24px 40px; max-width: 900px; margin: 0 auto; }
+.section { display: none; }
+.section.active { display: block; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ===== HERO ===== */
+.hero {
+  text-align: center; padding: 40px 0 30px;
+  border-bottom: 1px solid var(--border); margin-bottom: 30px;
+}
+.hero h1 { font-size: 28px; color: var(--text-primary); margin-bottom: 8px; }
+.hero p { color: var(--text-secondary); font-size: 15px; }
+.hero-badges { display: flex; justify-content: center; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.badge {
+  padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+}
+.badge-notes { background: rgba(78,204,163,0.15); color: var(--success); border: 1px solid rgba(78,204,163,0.3); }
+.badge-quiz { background: rgba(233,69,96,0.15); color: var(--accent-light); border: 1px solid rgba(233,69,96,0.3); }
+.badge-questions { background: rgba(240,165,0,0.15); color: var(--warning); border: 1px solid rgba(240,165,0,0.3); }
+
+/* ===== NOTES SECTION ===== */
+.note-card {
+  background: var(--bg-card); border-radius: var(--radius);
+  padding: 24px; margin-bottom: 16px; border: 1px solid var(--border);
+  transition: all 0.3s; position: relative; overflow: hidden;
+}
+.note-card:hover { border-color: var(--accent); box-shadow: var(--shadow); }
+.note-card.read { border-left: 4px solid var(--success); }
+.note-card.unread { border-left: 4px solid var(--border); }
+.note-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 12px; cursor: pointer;
+}
+.note-title {
+  font-size: 18px; font-weight: 700; color: var(--text-primary);
+  display: flex; align-items: center; gap: 8px;
+}
+.note-num {
+  background: var(--accent); color: #fff; font-size: 12px;
+  font-weight: 700; width: 26px; height: 26px;
+  border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; flex-shrink: 0;
+}
+.note-body { display: none; padding-top: 12px; border-top: 1px solid var(--border); }
+.note-card.expanded .note-body { display: block; animation: fadeIn 0.3s; }
+.note-body h4 { color: var(--accent-light); font-size: 14px; margin: 14px 0 6px; }
+.note-body p, .note-body li { font-size: 14px; color: var(--text-secondary); margin-bottom: 6px; }
+.note-body ul { list-style: none; padding-left: 0; }
+.note-body ul li { padding-left: 20px; position: relative; }
+.note-body ul li::before { content: "\25B8"; color: var(--accent); position: absolute; left: 0; }
+.note-body strong { color: var(--text-primary); }
+.note-body .key-point {
+  background: rgba(233,69,96,0.1); border-left: 3px solid var(--accent);
+  padding: 10px 14px; margin: 10px 0; border-radius: 4px;
+  font-size: 13px; color: var(--text-primary);
+}
+.note-body .definition {
+  background: rgba(78,204,163,0.1); border-left: 3px solid var(--success);
+  padding: 10px 14px; margin: 10px 0; border-radius: 4px;
+  font-size: 13px;
+}
+.expand-icon {
+  font-size: 14px; color: var(--text-secondary); transition: transform 0.3s;
+}
+.note-card.expanded .expand-icon { transform: rotate(180deg); }
+.mark-read-btn {
+  margin-top: 12px; padding: 6px 16px; font-size: 13px;
+  background: rgba(78,204,163,0.15); color: var(--success);
+  border: 1px solid rgba(78,204,163,0.3); border-radius: 6px;
+  cursor: pointer; transition: all 0.25s;
+}
+.mark-read-btn:hover { background: rgba(78,204,163,0.25); }
+.mark-read-btn.read-state { background: rgba(78,204,163,0.25); }
+
+/* ===== QUIZ SECTION ===== */
+.quiz-header {
+  text-align: center; margin-bottom: 24px;
+}
+.quiz-header h2 { font-size: 24px; margin-bottom: 8px; }
+.quiz-header p { color: var(--text-secondary); font-size: 14px; }
+.quiz-stats {
+  display: flex; justify-content: center; gap: 30px; margin: 20px 0;
+}
+.quiz-stat { text-align: center; }
+.quiz-stat-value { font-size: 28px; font-weight: 700; color: var(--accent-light); }
+.quiz-stat-label { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
+
+.quiz-card {
+  background: var(--bg-card); border-radius: var(--radius);
+  padding: 28px; margin-bottom: 16px; border: 1px solid var(--border);
+}
+.quiz-q-num {
+  font-size: 12px; color: var(--accent-light); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
+}
+.quiz-question { font-size: 16px; font-weight: 600; margin-bottom: 18px; line-height: 1.5; }
+.quiz-options { display: flex; flex-direction: column; gap: 10px; }
+.quiz-option {
+  padding: 12px 16px; border: 2px solid var(--border); border-radius: 8px;
+  cursor: pointer; transition: all 0.25s; font-size: 14px;
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg-secondary);
+}
+.quiz-option:hover { border-color: var(--accent-light); background: var(--bg-card-hover); }
+.quiz-option.selected { border-color: var(--accent); background: rgba(233,69,96,0.1); }
+.quiz-option.correct { border-color: var(--success); background: rgba(78,204,163,0.15); }
+.quiz-option.incorrect { border-color: var(--error); background: rgba(233,69,96,0.15); }
+.quiz-option-letter {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--bg-primary); display: flex; align-items: center;
+  justify-content: center; font-weight: 700; font-size: 13px;
+  flex-shrink: 0; border: 1px solid var(--border);
+}
+.quiz-option.correct .quiz-option-letter { background: var(--success); color: #fff; border-color: var(--success); }
+.quiz-option.incorrect .quiz-option-letter { background: var(--error); color: #fff; border-color: var(--error); }
+.quiz-feedback {
+  margin-top: 14px; padding: 12px 16px; border-radius: 8px;
+  font-size: 13px; display: none;
+}
+.quiz-feedback.show { display: block; animation: fadeIn 0.3s; }
+.quiz-feedback.correct { background: rgba(78,204,163,0.1); border-left: 3px solid var(--success); }
+.quiz-feedback.incorrect { background: rgba(233,69,96,0.1); border-left: 3px solid var(--error); }
+.quiz-feedback strong { display: block; margin-bottom: 4px; }
+
+.quiz-nav {
+  display: flex; justify-content: space-between; align-items: center; margin-top: 16px;
+}
+.quiz-btn {
+  padding: 10px 24px; border: none; border-radius: 8px;
+  font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.25s;
+}
+.quiz-btn-primary { background: var(--accent); color: #fff; }
+.quiz-btn-primary:hover { background: var(--accent-light); }
+.quiz-btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.quiz-btn-secondary { background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border); }
+.quiz-btn-secondary:hover { color: var(--text-primary); }
+
+.quiz-progress-dots {
+  display: flex; gap: 6px; justify-content: center; margin: 20px 0;
+}
+.quiz-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--bg-card); transition: all 0.3s;
+}
+.quiz-dot.current { background: var(--accent); transform: scale(1.3); }
+.quiz-dot.answered { background: var(--success); }
+.quiz-dot.answered-incorrect { background: var(--error); }
+
+.quiz-result {
+  text-align: center; padding: 40px 0;
+}
+.quiz-result-score {
+  font-size: 48px; font-weight: 800; margin: 10px 0;
+}
+.quiz-result-message { font-size: 16px; color: var(--text-secondary); margin-bottom: 20px; }
+.quiz-result-breakdown {
+  display: flex; justify-content: center; gap: 24px; margin: 20px 0;
+}
+.result-stat { text-align: center; }
+.result-stat-value { font-size: 22px; font-weight: 700; }
+.result-stat-label { font-size: 12px; color: var(--text-secondary); }
+
+/* ===== PROGRESS SECTION ===== */
+.progress-overview {
+  background: var(--bg-card); border-radius: var(--radius);
+  padding: 30px; margin-bottom: 20px; border: 1px solid var(--border);
+}
+.progress-overview h2 { font-size: 22px; margin-bottom: 20px; }
+.progress-bar-large {
+  width: 100%; height: 24px; background: var(--bg-secondary);
+  border-radius: 12px; overflow: hidden; margin: 10px 0 6px;
+}
+.progress-bar-large-fill {
+  height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--success));
+  border-radius: 12px; transition: width 0.6s; display: flex;
+  align-items: center; justify-content: flex-end; padding-right: 10px;
+  font-size: 12px; font-weight: 700; color: #fff;
+}
+.progress-percent { font-size: 14px; color: var(--text-secondary); text-align: right; }
+.progress-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px;
+}
+.progress-item {
+  background: var(--bg-secondary); border-radius: 8px; padding: 16px;
+  border: 1px solid var(--border);
+}
+.progress-item-label { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
+.progress-item-bar {
+  height: 8px; background: var(--bg-primary); border-radius: 4px; overflow: hidden;
+}
+.progress-item-fill {
+  height: 100%; border-radius: 4px; transition: width 0.5s;
+}
+.progress-item-fill.notes { background: var(--success); }
+.progress-item-fill.quiz { background: var(--accent); }
+.progress-item-value { font-size: 24px; font-weight: 700; margin-top: 8px; }
+
+.topic-progress { margin-top: 20px; }
+.topic-progress-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.topic-progress-item:last-child { border-bottom: none; }
+.topic-name { font-size: 14px; }
+.topic-status { font-size: 13px; font-weight: 600; }
+.topic-status.read { color: var(--success); }
+.topic-status.unread { color: var(--text-secondary); }
+
+.reset-btn {
+  margin-top: 20px; padding: 8px 20px; font-size: 13px;
+  background: rgba(233,69,96,0.1); color: var(--error);
+  border: 1px solid rgba(233,69,96,0.3); border-radius: 6px;
+  cursor: pointer; transition: all 0.25s;
+}
+.reset-btn:hover { background: rgba(233,69,96,0.2); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .navbar { flex-wrap: wrap; gap: 8px; }
+  .nav-tab { padding: 6px 12px; font-size: 13px; }
+  .progress-mini { display: none; }
+  .main-content { padding: 100px 16px 40px; }
+  .hero h1 { font-size: 22px; }
+  .progress-grid { grid-template-columns: 1fr; }
+  .quiz-stats { gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    <span>&#128218;</span> Study Guide
+  </div>
+  <div class="navbar-tabs">
+    <button class="nav-tab active" onclick="showSection('notes')">Notes</button>
+    <button class="nav-tab" onclick="showSection('quiz')">Quiz</button>
+    <button class="nav-tab" onclick="showSection('progress')">Progress</button>
+  </div>
+  <div class="progress-mini">
+    <span id="navProgressText">0%</span>
+    <div class="progress-mini-bar">
+      <div class="progress-mini-fill" id="navProgressBar" style="width:0%"></div>
+    </div>
+  </div>
+</nav>
+
+<div class="main-content">
+
+<!-- ===== NOTES SECTION ===== -->
+<div class="section active" id="section-notes">
+  <div class="hero">
+    <h1>Chapter 1: Introduction to Multinational Financial Management</h1>
+    <p>Comprehensive study notes with key concepts, definitions, and takeaways</p>
+    <div class="hero-badges">
+      <span class="badge badge-notes">8 Topics</span>
+      <span class="badge badge-quiz">Interactive Quiz</span>
+      <span class="badge badge-questions">20 Questions</span>
+    </div>
+  </div>
+
+  <!-- Note 1 -->
+  <div class="note-card unread" id="note-1" data-note="1">
+    <div class="note-header" onclick="toggleNote(1)">
+      <div class="note-title"><span class="note-num">1</span> Financial Management: Background</div>
+      <span class="expand-icon">&#9662;</span>
+    </div>
+    <div class="note-body">
+      <div class="definition"><strong>Definition:</strong> Financial management is the management of the cost of borrowing and the returns on investment. A good finance manager strives to borrow at a lower cost and invest in higher-return investments.</div>
+      <h4>Scope of Financial Management</h4>
+      <ul>
+        <li>Personal finance management</li>
+        <li>Business finance management (from small businesses to global corporations)</li>
+      </ul>
+      <h4>Forms of Business Organization</h4>
+      <ul>
+        <li><strong>Sole Proprietorship</strong> - owned by one individual</li>
+        <li><strong>Partnership</strong> - owned by two or more individuals</li>
+        <li><strong>Corporations</strong> - (a) domestic, (b) international</li>
+      </ul>
+      <div class="key-point"><strong>Key Point:</strong> Financial management applies at every scale - from managing your personal budget to managing global MNCs. The core principle remains the same: minimize borrowing costs, maximize investment returns.</div>
+    </div>
+    <button class="mark-read-btn" onclick="markRead(1)">Mark as Read</button>
+  </div>
+
+  <!-- Note 2 -->
+  <div class="note-card unread" id="note-2" data-note="2">
+    <div class="note-header" onclick="toggleNote(2)">
+      <div class="note-title"><span class="note-num">2</span> The Multinational Corporation (MNC)</div>
+      <span class="expand-icon">&#9662;</span>
+    </div>
+    <div class="note-body">
+      <div class="definition"><strong>Definition:</strong> An MNC is a company with production and distribution facilities in more than one country.</div>
+      <h4>Key Characteristics of MNCs</h4>
+      <ul>
+        <li>MNCs are in a better position to exploit different costs and skills between nations</li>
+        <li>They transmit international competition across borders</li>
+        <li>They bring production efficiencies to the markets they operate in</li>
+      </ul>
+      <h4>Reasons for Going International</h4>
+      <ul>
+        <li><strong>To seek raw materials</strong> - access to natural resources not available domestically</li>
+        <li><strong>To seek more markets</strong> - expand customer base beyond domestic borders</li>
+        <li><strong>To minimize costs of production</strong> - leverage lower labor, land, or operational costs abroad</li>
+      </ul>
+      <div class="key-point"><strong>Key Point:</strong> MNCs create value by arbitraging differences in costs, skills, and resources across countries while increasing competition and efficiency.</div>
+    </div>
+    <button class="mark-read-btn" onclick="markRead(2)">Mark as Read</button>
+  </div>
+
+  <!-- Note 3 -->
+  <div class="note-card unread" id="note-3" data-note="3">
+    <div class="note-header" onclick="toggleNote(3)">
+      <div class="note-title"><span class="note-num">3</span> Goals of the MNC</div>
+      <span class="expand-icon">&#9662;</span>
+    </div>
+    <div class="note-body">
+      <h4>Theoretical Goals (Multiple possible goals)</h4>
+      <ul>
+        <li>Social welfare</li>
+        <li>Generating jobs</li>
+        <li>Welfare of workers and their families</li>
+        <li>Protecting the environment</li>
+        <li>Minimisation of costs</li>
+        <li>Maximisation of sales</li>
+        <li>Minimisation of risk</li>
+        <li>Maximisation of shareholders' wealth</li>
+        <li>Maximisation of accounting profits</li>
+      </ul>
+      <div class="key-point"><strong>Critical Question:</strong> Can an MNC work to achieve ALL of these goals simultaneously? The answer is no - these goals often conflict with each other.</div>
+      <h4>The Primary Goal</h4>
+      <div class="definition"><strong>Primary Goal:</strong> The commonly accepted goal of MNCs is to <strong>maximize shareholder wealth</strong>. No matter what other goals exist, they cannot be achieved long-term if shareholders (owners) are not looked after.</div>
+      <ul>
+        <li>Focus on MNCs that wholly own their foreign subsidiaries</li>
+        <li>Financial managers throughout the MNC have a single goal: maximizing the value of the entire MNC</li>
+      </ul>
+    </div>
+    <button class="mark-read-btn" onclick="markRead(3)">Mark as Read</button>
+  </div>
+
+  <!-- Note 4 -->
+  <div class="note-card unread" id="note-4" data-note="4">
+    <div class="note-header" onclick="toggleNote(4)">
+      <div class="note-title"><span class="note-num">4</span> Constraints Interfering with the MNC Goal</div>
+      <span class="expand-icon">&#9662;</span>
+    </div>
+    <div class="note-body">
+      <p>While the primary goal is shareholder wealth maximization, MNCs face constraints that can interfere with this objective, commonly framed as <strong>ESG factors</strong>:</p>
+      <h4>Environmental Constraints (E)</h4>
+      <ul>
+        <li>Environmental regulations and sustainability requirements</li>
+        <li>Carbon emissions and pollution controls</li>
+        <li>Resource conservation mandates</li>
+      </ul>
+      <h4>Social Constraints (S)</h4>
+      <ul>
+        <li>Labor laws and worker welfare</li>
+        <li>Community impact and social responsibility</li>
+        <li>Human rights compliance</li>
+      </ul>
+      <h4>Governance Constraints (G)</h4>
+      <ul>
+        <li>Corporate governance standards</li>
+        <li>Transparency and reporting requirements</li>
+        <li>Board structure and accountability</li>
+      </ul>
+      <div class="key-point"><strong>Key Point:</strong> ESG constraints represent a balancing act - MNCs must pursue shareholder wealth while satisfying environmental, social, and governance obligations in each country they operate.</div>
+    </div>
+    <button class="mark-read-btn" onclick="markRead(4)">Mark as Read</button>
+  </div>
+
+  <!-- Note 5 -->
+  <div class="note-card unread" id="note-5" data-note="5">
+    <div class="note-header" onclick="toggleNote(5)">
+      <div class="note-title"><span class="note-num">5</span> Theories of International Business</div>
+      <span class="expand-icon">&#9662;</span>
+    </div>
+    <div class="note-body">
+      <p>Three key theories justify why firms engage in international business:</p>
+      <h4>1. Theory of Comparative Advantage</h4>
+      <ul>
+        <li>Countries should specialize in producing goods where they have a comparative advantage</li>
+        <li>Trade benefits all parties when each country focuses on what it produces most efficiently</li>
+        <li>Explains why international trade is mutually beneficial</li>
+      </ul>
+      <h4>2. Theory of Imperfect Markets Theory</h4>
+      <ul>
+        <li>Markets for factors of production (labor, capital, technology) are imperfect</li>
+        <li>Imperfections create opportunities for firms to capitalize on cost and skill differences</li>
+        <li>Explains why MNCs exist - they exploit market imperfections across borders</li>
+      </ul>
+      <h4>3. Product Life Cycle Theory</h4>
+      <ul>
+        <li>Products go through stages: introduction, growth, maturity, and decline</li>
+        <li>Firms initially produce domestically, then expand internationally as the product matures</li>
+        <li>Explains the sequential internationalization of firms</li>
+        <li>As products mature, production moves to lower-cost countries</li>
+      </ul>
+      <div class="key-point"><strong>Key Point:</strong> These three theories complement each other - comparative advantage explains trade patterns, imperfect markets explain MNC existence, and the product cycle explains the timing of international expansion.</div>
+    </div>
+    <button class="mark-read-btn" onclick="markRead(5)">Mark as Read</button>
+  </div>
+
+  <!-- Note 6 -->
+  <div class="note-card unread" id="note-6" data-note="6">
+    <div class="note-header" onclick="toggleNote(6)">
+      <div class="note-title"><span class="note-num">6</span> Methods of International Business (Part 1)</div>
+      <span class="expand-icon">&#9662;</span>
+    </div>
+    <div class="note-body">
+      <p>Firms engage in international business through six main methods. Here are the first three:</p>
+      <h4>1. International Trade (Export/Import)</h4>
+      <ul>
+        <li>Relatively conservative approach to penetrate new and large markets (exporting)</li>
+        <li>Obtain supplies at a low cost (importing)</li>
+        <li><strong>Minimal risk</strong> - no capital at risk</li>
+        <li>The internet facilitates international trade by allowing firms to advertise and accept orders online</li>
+      </ul>
+      <h4>2. Licensing</h4>
+      <div class="definition"><strong>Definition:</strong> Licensing obligates a firm to provide its technology (copyrights, patents, trademarks, or trade names) in exchange for fees or other specified benefits.</div>
+      <ul>
+        <li>Allows firms to use their technology in foreign markets without major investment</li>
+        <li>No transportation costs that result from exporting</li>
+        <li><strong>Major disadvantage:</strong> Difficult to ensure quality control in the foreign production process</li>
+      </ul>
+      <h4>3. Franchising</h4>
+      <div class="definition"><strong>Definition:</strong> Franchising obligates a firm to provide a specialized sales or service strategy, support assistance, and possibly an initial investment in exchange for periodic fees.</div>
+      <ul>
+        <li>Allows penetration into foreign markets without a major investment</li>
+        <li>Example: McDonald's (McD) franchise model</li>
+      </ul>
+    </div>
+    <button class="mark-read-btn" onclick="markRead(6)">Mark as Read</button>
+  </div>
+
+  <!-- Note 7 -->
+  <div class="note-card unread" id="note-7" data-note="7">
+    <div class="note-header" onclick="toggleNote(7)">
+      <div class="note-title"><span class="note-num">7</span> Methods of International Business (Part 2)</div>
+      <span class="expand-icon">&#9662;</span>
+    </div>
+    <div class="note-body">
+      <p>The remaining three methods of engaging in international business:</p>
+      <h4>4. Joint Ventures</h4>
+      <div class="definition"><strong>Definition:</strong> A venture jointly owned and operated by two or more firms. A firm may enter a foreign market by engaging in a joint venture with firms that reside in those markets.</div>
+      <ul>
+        <li>Allows two firms to apply their respective cooperative advantages in a given project</li>
+        <li>Example: Myvi (Malaysian car joint venture)</li>
+        <li>Combines local market knowledge with foreign expertise</li>
+      </ul>
+      <h4>5. Acquisitions of Existing Operations</h4>
+      <ul>
+        <li>Acquiring firms in foreign countries allows full control over foreign businesses</li>
+        <li>Quickly obtains a large portion of foreign market share</li>
+        <li><strong>Risk:</strong> Subject to large losses because of larger investment required</li>
+        <li><strong>Risk:</strong> Liquidation may be difficult if the foreign subsidiary performs poorly</li>
+      </ul>
+      <h4>6. Establishing New Foreign Subsidiaries</h4>
+      <ul>
+        <li>Firms penetrate markets by establishing new operations in foreign countries</li>
+        <li>Requires a large investment to start from ground zero</li>
+        <li>Operations can be tailored exactly to the firm's needs</li>
+        <li>May require smaller investment than buying an existing firm</li>
+        <li>Requires more country risk investigations</li>
+      </ul>
+      <div class="key-point"><strong>Summary of Methods:</strong> The six methods range from low risk/low control (trade) to high risk/high control (new subsidiaries). Firms choose based on their risk appetite, investment capacity, and strategic goals.</div>
+    </div>
+    <button class="mark-read-btn" onclick="markRead(7)">Mark as Read</button>
+  </div>
+
+  <!-- Note 8 -->
+  <div class="note-card unread" id="note-8" data-note="8">
+    <div class="note-header" onclick="toggleNote(8)">
+      <div class="note-title"><span class="note-num">8</span> Uncertainties & Chapter Summary</div>
+      <span class="expand-icon">&#9662;</span>
+    </div>
+    <div class="note-body">
+      <h4>Uncertainties Surrounding MNC Cash Flow</h4>
+      <p>MNCs face three major types of uncertainty that affect their cash flows:</p>
+      <ul>
+        <li><strong>Exposure to international economic conditions:</strong> If economic conditions in a foreign country weaken, purchases of products decline and MNC sales in that country may be lower than expected.</li>
+        <li><strong>Exposure to international political risk:</strong> A foreign government may increase taxes or impose barriers on the MNC's subsidiary.</li>
+        <li><strong>Exposure to exchange rate risk:</strong> If foreign currencies related to the MNC subsidiary weaken against the U.S. dollar, the MNC will receive a lower amount of dollar cash flows than expected.</li>
+      </ul>
+      <div class="key-point"><strong>Key Point:</strong> These three risks - economic, political, and exchange rate - are interconnected and can compound each other, making risk management a critical function for MNCs.</div>
+      <h4>Chapter Summary</h4>
+      <div class="definition">
+        <strong>One Goal:</strong> Shareholder wealth maximization<br><br>
+        <strong>Three Theories:</strong> Comparative Advantage; Imperfect Markets; Product Life Cycle<br><br>
+        <strong>Six Modes:</strong> Trade; Licensing; Franchising; Joint Ventures; Acquisition; Subsidiaries
+      </div>
+    </div>
+    <button class="mark-read-btn" onclick="markRead(8)">Mark as Read</button>
+  </div>
+</div>
+
+<!-- ===== QUIZ SECTION ===== -->
+<div class="section" id="section-quiz">
+  <div class="quiz-header">
+    <h2>Test Your Knowledge</h2>
+    <p>20 questions covering all topics from Chapter 1</p>
+    <div class="quiz-stats">
+      <div class="quiz-stat">
+        <div class="quiz-stat-value" id="quizScore">0</div>
+        <div class="quiz-stat-label">Score</div>
+      </div>
+      <div class="quiz-stat">
+        <div class="quiz-stat-value" id="quizAnswered">0/20</div>
+        <div class="quiz-stat-label">Answered</div>
+      </div>
+      <div class="quiz-stat">
+        <div class="quiz-stat-value" id="quizCorrect">0</div>
+        <div class="quiz-stat-label">Correct</div>
+      </div>
+    </div>
+    <div class="quiz-progress-dots" id="quizDots"></div>
+  </div>
+  <div id="quizContainer"></div>
+  <div id="quizResult" style="display:none;"></div>
+</div>
+
+<!-- ===== PROGRESS SECTION ===== -->
+<div class="section" id="section-progress">
+  <div class="progress-overview">
+    <h2>&#128202; Learning Progress Dashboard</h2>
+    <div class="progress-bar-large">
+      <div class="progress-bar-large-fill" id="overallProgress" style="width:0%;">0%</div>
+    </div>
+    <p class="progress-percent">Overall completion</p>
+    <div class="progress-grid">
+      <div class="progress-item">
+        <div class="progress-item-label">Notes Read</div>
+        <div class="progress-item-bar"><div class="progress-item-fill notes" id="notesProgress" style="width:0%"></div></div>
+        <div class="progress-item-value" id="notesValue">0 / 8</div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-item-label">Quiz Completion</div>
+        <div class="progress-item-bar"><div class="progress-item-fill quiz" id="quizProgress" style="width:0%"></div></div>
+        <div class="progress-item-value" id="quizValue">0 / 20</div>
+      </div>
+    </div>
+    <div class="topic-progress" id="topicProgressList"></div>
+    <button class="reset-btn" onclick="resetProgress()">Reset All Progress</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ===== STATE MANAGEMENT =====
+const STORAGE_KEY = 'mfm_ch1_progress';
+let state = {
+  notesRead: [false, false, false, false, false, false, false, false],
+  quizAnswers: new Array(20).fill(null),
+  quizCorrect: new Array(20).fill(null)
+};
+
+// ===== QUIZ DATA =====
+const quizData = [
+  {
+    q: "What is the basic idea of financial management?",
+    options: [
+      "Managing marketing campaigns and sales strategies",
+      "Managing the cost of borrowing and returns on investment",
+      "Managing human resources and employee benefits",
+      "Managing production schedules and supply chains"
+    ],
+    correct: 1,
+    explanation: "Financial management focuses on borrowing at lower costs and investing in higher-return investments."
+  },
+  {
+    q: "Which of the following is NOT a form of business organization mentioned in the chapter?",
+    options: [
+      "Sole proprietorship",
+      "Partnership",
+      "Cooperative",
+      "Corporation"
+    ],
+    correct: 2,
+    explanation: "The chapter lists three forms: sole proprietorship, partnership, and corporations (domestic and international). Cooperatives were not mentioned."
+  },
+  {
+    q: "What is a Multinational Corporation (MNC)?",
+    options: [
+      "A company that only exports goods to other countries",
+      "A company with production and distribution facilities in more than one country",
+      "A company that trades exclusively on international stock exchanges",
+      "A company with foreign shareholders"
+    ],
+    correct: 1,
+    explanation: "An MNC is defined as a company with production and distribution facilities in more than one country."
+  },
+  {
+    q: "Which is NOT one of the three main reasons firms go international?",
+    options: [
+      "To seek raw materials",
+      "To seek more markets",
+      "To minimize costs of production",
+      "To maximize tax benefits"
+    ],
+    correct: 3,
+    explanation: "The three reasons are: (1) seeking raw materials, (2) seeking more markets, and (3) minimizing costs of production."
+  },
+  {
+    q: "What is the commonly accepted primary goal of an MNC?",
+    options: [
+      "Maximisation of accounting profits",
+      "Maximisation of sales revenue",
+      "Maximisation of shareholder wealth",
+      "Minimisation of costs"
+    ],
+    correct: 2,
+    explanation: "The primary goal is to maximize shareholder wealth. Other goals cannot be achieved long-term if shareholders are not looked after."
+  },
+  {
+    q: "Why can't an MNC achieve all theoretical goals simultaneously?",
+    options: [
+      "Because they require too much capital",
+      "Because the goals often conflict with each other",
+      "Because international law prohibits it",
+      "Because shareholders would object"
+    ],
+    correct: 1,
+    explanation: "Goals like minimizing costs, maximizing social welfare, and maximizing profits often conflict with each other, making simultaneous achievement impossible."
+  },
+  {
+    q: "What does ESG stand for in the context of MNC constraints?",
+    options: [
+      "Economic, Social, Global",
+      "Environmental, Social, Governance",
+      "Equity, Sales, Growth",
+      "Export, Supply, Government"
+    ],
+    correct: 1,
+    explanation: "ESG stands for Environmental, Social, and Governance - three categories of constraints that interfere with the MNC's goal of shareholder wealth maximization."
+  },
+  {
+    q: "Which theory explains why countries should specialize in producing goods where they have an advantage?",
+    options: [
+      "Theory of Imperfect Markets",
+      "Product Life Cycle Theory",
+      "Theory of Comparative Advantage",
+      "Theory of International Trade"
+    ],
+    correct: 2,
+    explanation: "The Theory of Comparative Advantage states that countries should specialize in producing goods where they have a comparative advantage, making trade mutually beneficial."
+  },
+  {
+    q: "The Imperfect Markets Theory explains:",
+    options: [
+      "Why products go through life cycles",
+      "Why MNCs exist and exploit cost/skill differences across borders",
+      "Why countries should specialize in certain products",
+      "Why exchange rates fluctuate"
+    ],
+    correct: 1,
+    explanation: "The Imperfect Markets Theory states that market imperfections (in labor, capital, technology) create opportunities for firms to capitalize on cost and skill differences across countries."
+  },
+  {
+    q: "According to the Product Life Cycle Theory, what happens as a product matures?",
+    options: [
+      "Production stays domestic indefinitely",
+      "Production moves to lower-cost countries",
+      "The product is immediately discontinued",
+      "The firm exits the market entirely"
+    ],
+    correct: 1,
+    explanation: "As products mature through their life cycle, production typically moves to lower-cost countries, and firms expand internationally."
+  },
+  {
+    q: "Which method of international business carries the minimal risk with no capital at risk?",
+    options: [
+      "Licensing",
+      "Franchising",
+      "International trade (Export/Import)",
+      "Acquisition"
+    ],
+    correct: 2,
+    explanation: "International trade is a conservative approach with minimal risk - no capital is at risk since the firm is simply exporting or importing."
+  },
+  {
+    q: "What is a major disadvantage of licensing?",
+    options: [
+      "High transportation costs",
+      "Large capital investment required",
+      "Difficulty ensuring quality control in foreign production",
+      "Limited market access"
+    ],
+    correct: 2,
+    explanation: "The major disadvantage of licensing is that it is difficult to ensure quality control in the foreign production process."
+  },
+  {
+    q: "Franchising obligates a firm to provide:",
+    options: [
+      "Technology and patents for a fee",
+      "A specialized sales or service strategy, support, and possibly initial investment",
+      "Raw materials at discounted rates",
+      "Exclusive distribution rights"
+    ],
+    correct: 1,
+    explanation: "Franchising obligates a firm to provide a specialized sales or service strategy, support assistance, and possibly an initial investment in exchange for periodic fees."
+  },
+  {
+    q: "What is a key advantage of a joint venture?",
+    options: [
+      "Full control over the foreign business",
+      "Allows two firms to apply their respective cooperative advantages",
+      "No investment required",
+      "Guaranteed market dominance"
+    ],
+    correct: 1,
+    explanation: "A joint venture is jointly owned and operated by two or more firms, allowing them to apply their respective cooperative advantages in a given project."
+  },
+  {
+    q: "What is a risk associated with acquiring existing foreign operations?",
+    options: [
+      "No control over the foreign business",
+      "Slow market entry",
+      "Subject to risk of large losses due to larger investment",
+      "Cannot obtain market share quickly"
+    ],
+    correct: 2,
+    explanation: "Acquisitions allow full control and quick market share, but are subject to the risk of large losses because of the larger investment required. Liquidation may also be difficult."
+  },
+  {
+    q: "What is an advantage of establishing new foreign subsidiaries over acquiring existing ones?",
+    options: [
+      "Requires no investment",
+      "Operations can be tailored exactly to the firm's needs",
+      "No country risk investigation needed",
+      "Immediate market share"
+    ],
+    correct: 1,
+    explanation: "Establishing new subsidiaries allows operations to be tailored exactly to the firm's needs, and may require smaller investment than buying an existing firm."
+  },
+  {
+    q: "Which of the following is NOT one of the three uncertainties surrounding MNC cash flows?",
+    options: [
+      "Exposure to international economic conditions",
+      "Exposure to international political risk",
+      "Exposure to exchange rate risk",
+      "Exposure to technological obsolescence"
+    ],
+    correct: 3,
+    explanation: "The three uncertainties are: (1) international economic conditions, (2) international political risk, and (3) exchange rate risk."
+  },
+  {
+    q: "If a foreign currency weakens against the U.S. dollar, what happens to the MNC's dollar cash flows?",
+    options: [
+      "They increase",
+      "They remain unchanged",
+      "They decrease",
+      "They become more volatile but average stays same"
+    ],
+    correct: 2,
+    explanation: "If foreign currencies weaken against the U.S. dollar, the MNC will receive a lower amount of dollar cash flows than expected - this is exchange rate risk."
+  },
+  {
+    q: "How many modes of international business were identified in the chapter summary?",
+    options: [
+      "Three",
+      "Four",
+      "Five",
+      "Six"
+    ],
+    correct: 3,
+    explanation: "The chapter summary identifies six modes: Trade; Licensing; Franchising; Joint Ventures; Acquisition; and establishing new Subsidiaries."
+  },
+  {
+    q: "According to the chapter summary, how many theories justify international business?",
+    options: [
+      "Two",
+      "Three",
+      "Four",
+      "Five"
+    ],
+    correct: 1,
+    explanation: "Three theories: (1) Comparative Advantage, (2) Imperfect Markets, and (3) Product Cycle Theory."
+  }
+];
+
+// ===== LOAD STATE =====
+function loadState() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      state.notesRead = parsed.notesRead || state.notesRead;
+      state.quizAnswers = parsed.quizAnswers || state.quizAnswers;
+      state.quizCorrect = parsed.quizCorrect || state.quizCorrect;
+    } catch(e) {}
+  }
+}
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+// ===== NAVIGATION =====
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  if (name === 'progress') updateProgressDashboard();
+}
+
+// ===== NOTES =====
+function toggleNote(id) {
+  const card = document.getElementById('note-' + id);
+  card.classList.toggle('expanded');
+}
+
+function markRead(id) {
+  event.stopPropagation();
+  state.notesRead[id-1] = !state.notesRead[id-1];
+  const card = document.getElementById('note-' + id);
+  const btn = card.querySelector('.mark-read-btn');
+  if (state.notesRead[id-1]) {
+    card.classList.add('read');
+    card.classList.remove('unread');
+    btn.textContent = 'Read \u2713';
+    btn.classList.add('read-state');
+  } else {
+    card.classList.remove('read');
+    card.classList.add('unread');
+    btn.textContent = 'Mark as Read';
+    btn.classList.remove('read-state');
+  }
+  saveState();
+  updateNavProgress();
+}
+
+// ===== QUIZ =====
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  quizData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.id = 'quiz-card-' + idx;
+    card.innerHTML = `
+      <div class="quiz-q-num">Question ${idx + 1} of ${quizData.length}</div>
+      <div class="quiz-question">${item.q}</div>
+      <div class="quiz-options" id="quiz-options-${idx}">
+        ${item.options.map((opt, i) => `
+          <div class="quiz-option" onclick="selectAnswer(${idx}, ${i})">
+            <div class="quiz-option-letter">${String.fromCharCode(65+i)}</div>
+            <span>${opt}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="quiz-feedback" id="quiz-feedback-${idx}"></div>
+    `;
+    container.appendChild(card);
+  });
+  buildDots();
+  restoreQuizState();
+}
+
+function buildDots() {
+  const dotsContainer = document.getElementById('quizDots');
+  dotsContainer.innerHTML = '';
+  quizData.forEach((_, idx) => {
+    const dot = document.createElement('div');
+    dot.className = 'quiz-dot';
+    dot.id = 'quiz-dot-' + idx;
+    dot.onclick = () => scrollToQuestion(idx);
+    dotsContainer.appendChild(dot);
+  });
+}
+
+function scrollToQuestion(idx) {
+  document.getElementById('quiz-card-' + idx).scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function selectAnswer(qIdx, optIdx) {
+  if (state.quizAnswers[qIdx] !== null) return; // Already answered
+  state.quizAnswers[qIdx] = optIdx;
+  const isCorrect = optIdx === quizData[qIdx].correct;
+  state.quizCorrect[qIdx] = isCorrect;
+
+  const options = document.querySelectorAll('#quiz-options-' + qIdx + ' .quiz-option');
+  options.forEach((opt, i) => {
+    opt.onclick = null;
+    if (i === quizData[qIdx].correct) {
+      opt.classList.add('correct');
+    } else if (i === optIdx) {
+      opt.classList.add('incorrect');
+    }
+  });
+
+  const feedback = document.getElementById('quiz-feedback-' + qIdx);
+  feedback.className = 'quiz-feedback show ' + (isCorrect ? 'correct' : 'incorrect');
+  feedback.innerHTML = `
+    <strong>${isCorrect ? '\u2705 Correct!' : '\u274C Not quite right'}</strong>
+    ${quizData[qIdx].explanation}
+  `;
+
+  const dot = document.getElementById('quiz-dot-' + qIdx);
+  dot.classList.remove('current');
+  dot.classList.add('answered');
+  if (!isCorrect) dot.classList.add('answered-incorrect');
+
+  updateQuizStats();
+  saveState();
+  updateNavProgress();
+
+  // Auto-scroll to next unanswered question
+  setTimeout(() => {
+    const nextUnanswered = state.quizAnswers.findIndex(a => a === null);
+    if (nextUnanswered !== -1 && nextUnanswered !== qIdx) {
+      scrollToQuestion(nextUnanswered);
+    } else if (nextUnanswered === -1) {
+      showQuizResult();
+    }
+  }, 1500);
+}
+
+function restoreQuizState() {
+  quizData.forEach((item, qIdx) => {
+    if (state.quizAnswers[qIdx] !== null) {
+      const optIdx = state.quizAnswers[qIdx];
+      const isCorrect = state.quizCorrect[qIdx];
+      const options = document.querySelectorAll('#quiz-options-' + qIdx + ' .quiz-option');
+      options.forEach((opt, i) => {
+        opt.onclick = null;
+        if (i === item.correct) opt.classList.add('correct');
+        else if (i === optIdx && !isCorrect) opt.classList.add('incorrect');
+      });
+      const feedback = document.getElementById('quiz-feedback-' + qIdx);
+      feedback.className = 'quiz-feedback show ' + (isCorrect ? 'correct' : 'incorrect');
+      feedback.innerHTML = `<strong>${isCorrect ? '\u2705 Correct!' : '\u274C Not quite right'}</strong> ${item.explanation}`;
+      const dot = document.getElementById('quiz-dot-' + qIdx);
+      dot.classList.add('answered');
+      if (!isCorrect) dot.classList.add('answered-incorrect');
+    }
+  });
+  updateQuizStats();
+}
+
+function updateQuizStats() {
+  const answered = state.quizAnswers.filter(a => a !== null).length;
+  const correct = state.quizCorrect.filter(c => c === true).length;
+  const score = Math.round((correct / quizData.length) * 100);
+  document.getElementById('quizScore').textContent = score + '%';
+  document.getElementById('quizAnswered').textContent = answered + '/' + quizData.length;
+  document.getElementById('quizCorrect').textContent = correct;
+}
+
+function showQuizResult() {
+  const correct = state.quizCorrect.filter(c => c === true).length;
+  const total = quizData.length;
+  const pct = Math.round((correct/total)*100);
+  const container = document.getElementById('quizContainer');
+  const result = document.getElementById('quizResult');
+  container.style.display = 'none';
+  result.style.display = 'block';
+  result.innerHTML = `
+    <div class="quiz-result">
+      <div class="quiz-result-score" style="color: ${pct >= 80 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--error)'}">${pct}%</div>
+      <div class="quiz-result-message">
+        ${pct >= 90 ? 'Outstanding! You have mastered Chapter 1.' :
+          pct >= 70 ? 'Great job! You have a solid understanding of the material.' :
+          pct >= 50 ? 'Good start! Review the notes and try again.' :
+          'Keep studying! Revisit the notes section and try again.'}
+      </div>
+      <div class="quiz-result-breakdown">
+        <div class="result-stat">
+          <div class="result-stat-value" style="color: var(--success)">${correct}</div>
+          <div class="result-stat-label">Correct</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-value" style="color: var(--error)">${total - correct}</div>
+          <div class="result-stat-label">Incorrect</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-value" style="color: var(--accent-light)">${total}</div>
+          <div class="result-stat-label">Total</div>
+        </div>
+      </div>
+      <button class="quiz-btn quiz-btn-primary" onclick="resetQuiz()" style="margin-top:20px;">Retake Quiz</button>
+    </div>
+  `;
+  result.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function resetQuiz() {
+  state.quizAnswers = new Array(20).fill(null);
+  state.quizCorrect = new Array(20).fill(null);
+  saveState();
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('quizContainer').style.display = 'block';
+  buildQuiz();
+  updateQuizStats();
+  updateNavProgress();
+  document.getElementById('quizContainer').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ===== PROGRESS DASHBOARD =====
+function updateProgressDashboard() {
+  const notesReadCount = state.notesRead.filter(r => r).length;
+  const quizAnsweredCount = state.quizAnswers.filter(a => a !== null).length;
+  const totalItems = 8 + 20;
+  const completedItems = notesReadCount + quizAnsweredCount;
+  const overallPct = Math.round((completedItems / totalItems) * 100);
+
+  document.getElementById('overallProgress').style.width = overallPct + '%';
+  document.getElementById('overallProgress').textContent = overallPct + '%';
+
+  const notesPct = Math.round((notesReadCount / 8) * 100);
+  document.getElementById('notesProgress').style.width = notesPct + '%';
+  document.getElementById('notesValue').textContent = notesReadCount + ' / 8';
+
+  const quizPct = Math.round((quizAnsweredCount / 20) * 100);
+  document.getElementById('quizProgress').style.width = quizPct + '%';
+  document.getElementById('quizValue').textContent = quizAnsweredCount + ' / 20';
+
+  // Topic progress list
+  const topicNames = [
+    'Financial Management Background',
+    'The MNC',
+    'Goals of the MNC',
+    'Constraints (ESG)',
+    'Theories of International Business',
+    'Methods Part 1 (Trade, Licensing, Franchising)',
+    'Methods Part 2 (JV, Acquisition, Subsidiaries)',
+    'Uncertainties & Summary'
+  ];
+  const list = document.getElementById('topicProgressList');
+  list.innerHTML = '';
+  topicNames.forEach((name, i) => {
+    const isRead = state.notesRead[i];
+    list.innerHTML += `
+      <div class="topic-progress-item">
+        <span class="topic-name">${i+1}. ${name}</span>
+        <span class="topic-status ${isRead ? 'read' : 'unread'}">${isRead ? '\u2713 Read' : 'Not read'}</span>
+      </div>
+    `;
+  });
+}
+
+function updateNavProgress() {
+  const notesReadCount = state.notesRead.filter(r => r).length;
+  const quizAnsweredCount = state.quizAnswers.filter(a => a !== null).length;
+  const totalItems = 8 + 20;
+  const completedItems = notesReadCount + quizAnsweredCount;
+  const overallPct = Math.round((completedItems / totalItems) * 100);
+  document.getElementById('navProgressBar').style.width = overallPct + '%';
+  document.getElementById('navProgressText').textContent = overallPct + '%';
+}
+
+function resetProgress() {
+  if (confirm('Are you sure you want to reset ALL progress? This will clear your notes read status and quiz answers.')) {
+    state = {
+      notesRead: [false, false, false, false, false, false, false, false],
+      quizAnswers: new Array(20).fill(null),
+      quizCorrect: new Array(20).fill(null)
+    };
+    saveState();
+    location.reload();
+  }
+}
+
+// ===== INIT =====
+loadState();
+buildQuiz();
+
+// Restore notes read states
+state.notesRead.forEach((isRead, i) => {
+  if (isRead) {
+    const card = document.getElementById('note-' + (i+1));
+    if (card) {
+      card.classList.add('read');
+      card.classList.remove('unread');
+      const btn = card.querySelector('.mark-read-btn');
+      btn.textContent = 'Read \u2713';
+      btn.classList.add('read-state');
+    }
+  }
+});
+
+// Check if quiz is fully answered
+if (state.quizAnswers.every(a => a !== null)) {
+  showQuizResult();
+}
+
+updateNavProgress();
+updateProgressDashboard();
+</script>
+</body>
+</html>
