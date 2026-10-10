@@ -1,26 +1,85 @@
-**📌 Problem & Solution Overview**
+# WorkBuddy AI — Universal Academic Study & Assignment Companion
 
-Problem Area	Student Pain Point	How WorkBuddy AI Solves It
+> Empowering university students to deconstruct complex coursework, draft rubric-compliant assignments, build presentation decks, and conquer exam prep with zero hallucinations.
 
-Presentation Design	Structuring dense academic text into concise visual slides is slow and frustrating.	Automatically generates presentation outlines, speaker notes, and concise per-slide bullet hierarchies tailored to academic rubrics.
-Assignment Navigation	Vague assignment briefs leave students paralyzed on where to begin and whether their draft meets criteria.	Breaks assignments into structured milestone tasks, provides a draft editor, and reviews submissions section-by-section with actionable criteria feedback.
-Exam Preparation	Passive rereading of slide decks causes weak retention and zero self-assessment visibility.	Ingests lecture decks to auto-generate summarized notes, interactive recall quizzes, and a visual mastery tracking dashboard.
+---
 
-**🚀 Key Features**
-**1. Presentation Slide Architect**
-Deck Structuring: Transforms raw notes, research papers, or assignment outcomes into organized slide blueprints.
-Speaker Script Generation: Produces talking points and presenter scripts alongside each slide to streamline practice.
-Rubric-Aligned Delivery: Ensures key components (problem statement, methodology, findings, references) match academic expectations.
+## 📌 Problem & Solution Overview
 
-**2. Assignment Step-by-Step Guide & Draft Feedback**
-Task Decomposition: Deconstructs uploaded assignment briefs into logical stages with word counts and deliverables.
-Interactive Draft Tracker: In-browser drafting panel with live word-count thresholds and completion checklists.
-Granular Evaluator: Provides iterative grading feedback across three pillars:
-Strengths: Clear elements satisfying the rubric.
-Improvements: Argument flow, formatting, or theoretical depth needing polish.
-Critical Gaps: Missing sections or rubric violations before final submission.
+| Problem Area | Student Pain Point | How WorkBuddy AI Solves It |
+| :--- | :--- | :--- |
+| **Presentation Design** | Structuring dense academic text into concise visual slides is slow and frustrating. | Automatically generates presentation outlines, speaker notes, visual cue suggestions, and concise slide hierarchies tailored to academic rubrics. |
+| **Assignment Navigation** | Vague assignment briefs leave students paralyzed on where to begin and whether their draft meets criteria. | Breaks assignments into structured milestone tasks, provides a draft editor, and reviews submissions section-by-section with actionable criteria feedback. |
+| **Exam Preparation** | Passive rereading of slide decks causes weak retention and zero self-assessment visibility. | Ingests lecture decks to auto-generate summarized notes, interactive recall quizzes, and a visual mastery tracking dashboard. |
 
-**3. Exam Study Prep, Interactive Quizzing & Mastery Tracker**
-Concept Condenser: Ingests lecture slide decks (PDF/PPT) and extracts definitions, core theories, and essential takeaways into collapsible study notes.
-Self-Paced Quiz Engine: Automatically generates multi-choice questions with answer keys and instant rationale explanations.
-Persistent Progress Dashboard: Tracks note review completion and quiz scores across sessions (via local persistence) to pinpoint weak areas.
+---
+
+## 🚀 Key Features
+
+### 1. Presentation Slide Architect
+* **Deck Blueprint Structuring**: Transforms raw notes, research papers, or assignment outcomes into organized pitch and lecture slide blueprints.
+* **Speaker Script Generation**: Produces talking points and presenter scripts alongside each slide to streamline presentation rehearsals.
+* **Rubric-Aligned Delivery**: Guarantees essential academic presentation structures (Problem Statement, Methodology, Findings, Evaluation, References).
+
+### 2. Assignment Step-by-Step Guide & Draft Feedback
+* **Task Decomposition**: Deconstructs uploaded assignment briefs into logical stages with recommended word-count distributions and checkpoints.
+* **Interactive Draft Tracker**: An in-browser drafting panel with live progress thresholds and completion checklists.
+* **Granular Evaluator**: Provides iterative grading feedback across three pillars:
+  * **Strengths**: Rubric-aligned elements executed correctly.
+  * **Improvements**: Argument flow, evidence citation, and theoretical depth needing polish.
+  * **Critical Gaps**: Missing sections or rubric violations before final submission.
+
+### 3. Exam Study Prep, Interactive Quizzing & Mastery Tracker
+* **Concept Condenser**: Ingests lecture slide decks (PDF/PPT/DOCX) and extracts definitions, core theories, and essential takeaways into collapsible study notes.
+* **Self-Paced Quiz Engine**: Automatically generates multiple-choice questions with answer keys, instant color-coded feedback, and detailed rationale explanations.
+* **Export to Quizlet & Anki**: Formats question sets into one-click TSV exports for immediate flashcard import.
+* **Persistent Progress Dashboard**: Tracks note review completion and quiz scores across sessions (via local persistence) to pinpoint weak areas.
+
+---
+
+## 🔗 Live Artifacts & Demonstrations
+
+Explore the interactive live web applications and study artifacts generated by WorkBuddy AI:
+
+* 🖥️ **Presentation Pitch Slides & Speaker Script Architect**:  
+  [https://workbuddy.cc/p/IjycXTvy76luIqWso6Fyqg?ext2=copy_link](https://workbuddy.cc/p/IjycXTvy76luIqWso6Fyqg?ext2=copy_link)  
+  *Automated pitch deck structure, visual slide blueprint, and synchronized presenter talking points.*
+
+* 📝 **Assignment Review & Drafting Guide**:  
+  [https://workbuddy.cc/p/Xe8iqYB31aagH9XeZEEEcf?ext2=copy_link](https://workbuddy.cc/p/Xe8iqYB31aagH9XeZEEEcf?ext2=copy_link)  
+  *Milestone task breakdown, criterion-by-criterion draft evaluation, and structured feedback.*
+
+* 📊 **Multinational Finance — Study Notes & Interactive Quiz**:  
+  [https://workbuddy.cc/p/jjqJ0dI7jlXM53yYtkVGJZ?ext2=copy_link](https://workbuddy.cc/p/jjqJ0dI7jlXM53yYtkVGJZ?ext2=copy_link)  
+  *High-yield theory synthesis, self-paced quiz engine, and Quizlet export integration.*
+
+---
+
+## 🛠️ System Workflow
+Course Materials / Prompts
+(PDF, PPTX, DOCX, Markdown, Text)
+│
+▼
+┌───────────────────────┐
+│    WorkBuddy AI       │
+│  Synthesizer Engine   │
+└──────────┬────────────┘
+│
+┌──────────┼───────────────────────┐
+▼          ▼                       ▼
+[Module 1]  [Module 2]             [Module 3]
+Slide Deck  Assignment Feedback    Study Guide & Interactive Quiz
+Architect   & Milestone Guide     (Web App + Quizlet TSV Export)
+
+1. **Ingest**: Upload course materials, lecture slide decks, assignment briefs, or text prompts.
+2. **Synthesize**: WorkBuddy AI extracts core concepts, structures milestones, and generates rubric-aligned outputs with zero hallucination.
+3. **Execute**: Review guided notes, track drafting milestones, practice presentation scripts, or take self-paced quizzes with instant feedback.
+
+---
+
+## 💻 Technical Implementation
+
+* **Frontend**: HTML5, Vanilla JavaScript (ES6+), Modern CSS (Responsive Tokens, Card UI)
+* **AI Orchestration**: WorkBuddy AI, Google Gemini API
+* **Local State**: Browser `localStorage` for offline session persistence and scoring
+* **External Integrations**: Quizlet TSV, Anki Flashcards
